@@ -1,6 +1,17 @@
-linux-azure (4.15.0-1018.18~16.04.1) xenial; urgency=medium
+linux-azure (4.15.0-1019.19~16.04.1) xenial; urgency=medium
 
-  * linux-azure: 4.15.0-1018.18~16.04.1 -proposed tracker (LP: #1782186)
+  [ Ubuntu: 4.15.0-30.32 ]
+
+  * CVE-2018-5390
+    - tcp: free batches of packets in tcp_prune_ofo_queue()
+    - tcp: avoid collapses in tcp_prune_queue() if possible
+    - tcp: detect malicious patterns in tcp_collapse_ofo_queue()
+    - tcp: call tcp_drop() from tcp_data_queue_ofo()
+    - tcp: add tcp_ooo_try_coalesce() helper
+
+ -- Stefan Bader <stefan.bader@canonical.com>  Thu, 26 Jul 2018 21:29:04 +0200
+
+linux-azure (4.15.0-1018.18) bionic; urgency=medium
 
   * linux-azure: 4.15.0-1018.18 -proposed tracker (LP: #1782178)
 
