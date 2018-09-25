@@ -1,6 +1,15 @@
-linux-azure (4.15.0-1024.25~16.04.1) xenial; urgency=medium
+linux-azure (4.15.0-1025.26~16.04.1) xenial; urgency=medium
 
-  * linux-azure: 4.15.0-1024.25~16.04.1 -proposed tracker (LP: #1791734)
+  [ Ubuntu: 4.15.0-36.39 ]
+
+  * CVE-2018-14633
+    - iscsi target: Use hex2bin instead of a re-implementation
+  * CVE-2018-17182
+    - mm: get rid of vmacache_flush_all() entirely
+
+ -- Kleber Sacilotto de Souza <kleber.souza@canonical.com>  Tue, 25 Sep 2018 12:26:20 +0200
+
+linux-azure (4.15.0-1024.25) bionic; urgency=medium
 
   * linux-azure: 4.15.0-1024.25 -proposed tracker (LP: #1791726)
 
@@ -431,7 +440,7 @@ linux-azure (4.15.0-1024.25~16.04.1) xenial; urgency=medium
   * [18.10 FEAT] Add kernel config option "CONFIG_SCLP_OFB" (LP: #1787898)
     - [Config] CONFIG_SCLP_OFB=y for s390x
 
- -- Kleber Sacilotto de Souza <kleber.souza@canonical.com>  Fri, 14 Sep 2018 15:13:03 +0200
+ -- Kleber Sacilotto de Souza <kleber.souza@canonical.com>  Fri, 14 Sep 2018 13:53:33 +0200
 
 linux-azure (4.15.0-1023.24) bionic; urgency=medium
 
