@@ -29,7 +29,7 @@ Priority: optional
 Provides: linux-image, fuse-module, aufs-dkms, =PROVIDES=${linux:rprovides}
 Depends: ${misc:Depends}, ${shlibs:Depends}, kmod, linux-base (>= 4.5ubuntu1~16.04.1), linux-modules-PKGVER-ABINUM-FLAVOUR
 Recommends: BOOTLOADER
-Breaks: flash-kernel (<< 3.0~rc.4ubuntu64) [arm64]
+Breaks: flash-kernel (<< 3.0~rc.4ubuntu62.2) [arm64]
 Conflicts: linux-image=SIGN-PEER-PKG=-PKGVER-ABINUM-FLAVOUR
 Suggests: fdutils, SRCPKGNAME-doc-PKGVER | SRCPKGNAME-source-PKGVER, SRCPKGNAME-tools, linux-headers-PKGVER-ABINUM-FLAVOUR, initramfs-tools | linux-initramfs-tool
 Description: Linux kernel image for version PKGVER on DESC
@@ -90,7 +90,7 @@ Build-Profiles: <!stage1>
 Architecture: ARCH
 Section: devel
 Priority: optional
-Depends: ${misc:Depends}, SRCPKGNAME-headers-PKGVER-ABINUM, ${shlibs:Depends}
+Depends: ${misc:Depends}, linux-azure-headers-PKGVER-ABINUM, ${shlibs:Depends}
 Provides: linux-headers, linux-headers-3.0
 Description: Linux kernel headers for version PKGVER on DESC
  This package provides kernel header files for version PKGVER on
