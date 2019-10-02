@@ -1517,6 +1517,7 @@ EXPORT_SYMBOL drivers/net/mii 0x00000000	mii_ethtool_set_link_ksettings
 EXPORT_SYMBOL drivers/net/mii 0x00000000	mii_ethtool_sset
 EXPORT_SYMBOL drivers/net/mii 0x00000000	mii_link_ok
 EXPORT_SYMBOL drivers/net/mii 0x00000000	mii_nway_restart
+EXPORT_SYMBOL drivers/net/ppp/pppox 0x00000000	pppox_compat_ioctl
 EXPORT_SYMBOL drivers/net/ppp/pppox 0x00000000	pppox_ioctl
 EXPORT_SYMBOL drivers/net/ppp/pppox 0x00000000	pppox_unbind_sock
 EXPORT_SYMBOL drivers/net/ppp/pppox 0x00000000	register_pppox_proto
@@ -13321,6 +13322,7 @@ EXPORT_SYMBOL_GPL vmlinux 0x00000000	kgdb_unregister_nmi_console
 EXPORT_SYMBOL_GPL vmlinux 0x00000000	kick_all_cpus_sync
 EXPORT_SYMBOL_GPL vmlinux 0x00000000	kick_process
 EXPORT_SYMBOL_GPL vmlinux 0x00000000	kill_dax
+EXPORT_SYMBOL_GPL vmlinux 0x00000000	kill_device
 EXPORT_SYMBOL_GPL vmlinux 0x00000000	kill_pid_info_as_cred
 EXPORT_SYMBOL_GPL vmlinux 0x00000000	klist_add_before
 EXPORT_SYMBOL_GPL vmlinux 0x00000000	klist_add_behind
