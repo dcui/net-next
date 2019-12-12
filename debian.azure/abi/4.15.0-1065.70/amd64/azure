@@ -3724,6 +3724,7 @@ EXPORT_SYMBOL vmlinux 0x00000000	acpi_os_map_generic_address
 EXPORT_SYMBOL vmlinux 0x00000000	acpi_os_printf
 EXPORT_SYMBOL vmlinux 0x00000000	acpi_os_read_port
 EXPORT_SYMBOL vmlinux 0x00000000	acpi_os_unmap_generic_address
+EXPORT_SYMBOL vmlinux 0x00000000	acpi_os_wait_events_complete
 EXPORT_SYMBOL vmlinux 0x00000000	acpi_os_write_port
 EXPORT_SYMBOL vmlinux 0x00000000	acpi_osi_is_win8
 EXPORT_SYMBOL vmlinux 0x00000000	acpi_pci_disabled
@@ -4607,7 +4608,6 @@ EXPORT_SYMBOL vmlinux 0x00000000	dns_query
 EXPORT_SYMBOL vmlinux 0x00000000	do_SAK
 EXPORT_SYMBOL vmlinux 0x00000000	do_blank_screen
 EXPORT_SYMBOL vmlinux 0x00000000	do_clone_file_range
-EXPORT_SYMBOL vmlinux 0x00000000	do_gettimeofday
 EXPORT_SYMBOL vmlinux 0x00000000	do_settimeofday64
 EXPORT_SYMBOL vmlinux 0x00000000	do_splice_direct
 EXPORT_SYMBOL vmlinux 0x00000000	do_trace_rdpmc
@@ -4761,7 +4761,6 @@ EXPORT_SYMBOL vmlinux 0x00000000	fb_dealloc_cmap
 EXPORT_SYMBOL vmlinux 0x00000000	fb_default_cmap
 EXPORT_SYMBOL vmlinux 0x00000000	fb_deferred_io_mmap
 EXPORT_SYMBOL vmlinux 0x00000000	fb_destroy_modedb
-EXPORT_SYMBOL vmlinux 0x00000000	fb_edid_add_monspecs
 EXPORT_SYMBOL vmlinux 0x00000000	fb_edid_to_monspecs
 EXPORT_SYMBOL vmlinux 0x00000000	fb_find_best_display
 EXPORT_SYMBOL vmlinux 0x00000000	fb_find_best_mode
@@ -5062,7 +5061,6 @@ EXPORT_SYMBOL vmlinux 0x00000000	get_random_bytes
 EXPORT_SYMBOL vmlinux 0x00000000	get_random_bytes_arch
 EXPORT_SYMBOL vmlinux 0x00000000	get_random_u32
 EXPORT_SYMBOL vmlinux 0x00000000	get_random_u64
-EXPORT_SYMBOL vmlinux 0x00000000	get_seconds
 EXPORT_SYMBOL vmlinux 0x00000000	get_super
 EXPORT_SYMBOL vmlinux 0x00000000	get_super_exclusive_thawed
 EXPORT_SYMBOL vmlinux 0x00000000	get_super_thawed
