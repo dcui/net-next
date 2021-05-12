@@ -1223,6 +1223,7 @@ xt_replace_table(struct xt_table *table,
 	int ret;
 
 	ret = xt_jumpstack_alloc(newinfo);
+	WARN_ON(ret == -EAGAIN);
 	if (ret < 0) {
 		*error = ret;
 		return NULL;
@@ -1234,8 +1235,11 @@ xt_replace_table(struct xt_table *table,
 
 	/* Check inside lock: is the old number correct? */
 	if (num_counters != private->number) {
-		pr_debug("num_counters != table->private->number (%u/%u)\n",
+		printk("cdx:num_counters != table->private->number (%u/%u)\n",
 			 num_counters, private->number);
+		trace_printk("cdx:num_counters != table->private->number (%u/%u)\n",
+			 num_counters, private->number);
+		WARN_ON(1);
 		local_bh_enable();
 		*error = -EAGAIN;
 		return NULL;

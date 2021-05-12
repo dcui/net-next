@@ -716,6 +716,7 @@ translate_table(struct net *net, struct xt_table_info *newinfo, void *entry0,
 						 repl->hook_entry,
 						 repl->underflow,
 						 repl->valid_hooks);
+		trace_printk("cdx1: ret=%d\n", ret);
 		if (ret != 0)
 			goto out_free;
 		if (i < repl->num_entries)
@@ -752,11 +753,13 @@ translate_table(struct net *net, struct xt_table_info *newinfo, void *entry0,
 	xt_entry_foreach(iter, entry0, newinfo->size) {
 		ret = find_check_entry(iter, net, repl->name, repl->size,
 				       &alloc_state);
+		trace_printk("cdx2: ret=%d\n", ret);
 		if (ret != 0)
 			break;
 		++i;
 	}
 
+	trace_printk("cdx3: ret=%d\n", ret);
 	if (ret != 0) {
 		xt_entry_foreach(iter, entry0, newinfo->size) {
 			if (i-- == 0)
@@ -1103,6 +1106,7 @@ __do_replace(struct net *net, const char *name, unsigned int valid_hooks,
 	}
 
 	oldinfo = xt_replace_table(t, num_counters, newinfo, &ret);
+	trace_printk("cdx1: ret=%d\n", ret);
 	if (!oldinfo)
 		goto put_module;
 
@@ -1171,11 +1175,13 @@ do_replace(struct net *net, const void __user *user, unsigned int len)
 	}
 
 	ret = translate_table(net, newinfo, loc_cpu_entry, &tmp);
+	trace_printk("cdx1: user=%px, len=%u, ret=%d\n", user, len, ret);
 	if (ret != 0)
 		goto free_newinfo;
 
 	ret = __do_replace(net, tmp.name, tmp.valid_hooks, newinfo,
 			   tmp.num_counters, tmp.counters);
+	trace_printk("cdx2: user=%px, len=%u, ret=%d\n", user, len, ret);
 	if (ret)
 		goto free_newinfo_untrans;
 	return 0;
@@ -1582,6 +1588,7 @@ compat_do_ipt_set_ctl(struct sock *sk,	int cmd, void __user *user,
 
 	switch (cmd) {
 	case IPT_SO_SET_REPLACE:
+		printk("cdx: compat_do_ipt_set_ctl: cmd is IPT_SO_SET_REPLACE, len=%u\n", len);
 		ret = compat_do_replace(sock_net(sk), user, len);
 		break;
 
@@ -1706,7 +1713,10 @@ do_ipt_set_ctl(struct sock *sk, int cmd, void __user *user, unsigned int len)
 
 	switch (cmd) {
 	case IPT_SO_SET_REPLACE:
+		trace_printk("cdx1: user=%px, len=%u\n", user, len);
 		ret = do_replace(sock_net(sk), user, len);
+		trace_printk("cdx2: user=%px, len=%u, ret=%d\n", user, len, ret);
+		WARN_ON(ret == -EAGAIN);
 		break;
 
 	case IPT_SO_SET_ADD_COUNTERS:
