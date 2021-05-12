@@ -1233,12 +1233,13 @@ xt_replace_table(struct xt_table *table,
 	local_bh_disable();
 	private = table->private;
 
+	printk("cdx: tbl=%s, num_counters, table->private->number (%u/%u)\n", table->name,
+		 num_counters, private->number);
+	trace_printk("cdx: tbl=%s, num_counters, table->private->number (%u/%u)\n", table->name,
+		 num_counters, private->number);
+
 	/* Check inside lock: is the old number correct? */
 	if (num_counters != private->number) {
-		printk("cdx:num_counters != table->private->number (%u/%u)\n",
-			 num_counters, private->number);
-		trace_printk("cdx:num_counters != table->private->number (%u/%u)\n",
-			 num_counters, private->number);
 		WARN_ON(1);
 		local_bh_enable();
 		*error = -EAGAIN;
