@@ -698,6 +698,7 @@ translate_table(struct net *net, struct xt_table_info *newinfo, void *entry0,
 
 	newinfo->size = repl->size;
 	newinfo->number = repl->num_entries;
+	trace_printk("cdx1: translate_table: newinfo=%px, num=%d,initial_num=%d,size=%u\n", newinfo, newinfo->size, newinfo->number, newinfo->initial_entries);
 
 	/* Init all hooks to impossible value. */
 	for (i = 0; i < NF_INET_NUMHOOKS; i++) {
@@ -1030,6 +1031,8 @@ static int get_info(struct net *net, void __user *user,
 		else
 			ret = 0;
 
+		trace_printk("cdx: get_info: user=%px, len=%u, name=%s, got num_entries=%d,%d, t=%px, priv=%px\n", user, *len, name, info.num_entries, private->number, t, t->private);
+
 		xt_table_unlock(t);
 		module_put(t->me);
 	} else
@@ -1065,6 +1068,8 @@ get_entries(struct net *net, struct ipt_get_entries __user *uptr,
 						   t, uptr->entrytable);
 		else
 			ret = -EAGAIN;
+
+		trace_printk("cdx: get_entries: user=%px, len=%u, name=%s, got num_entries=%d, t=%px, priv=%px\n", uptr, *len, get.name, private->number, t, t->private);
 
 		module_put(t->me);
 		xt_table_unlock(t);
@@ -1105,8 +1110,9 @@ __do_replace(struct net *net, const char *name, unsigned int valid_hooks,
 		goto put_module;
 	}
 
+	trace_printk("cdx1: ret=%d,name=%s,t=%px, p=%px, cur_num=%u\n", ret, name, t, t->private, t->private->number);
 	oldinfo = xt_replace_table(t, num_counters, newinfo, &ret);
-	trace_printk("cdx1: ret=%d\n", ret);
+	trace_printk("cdx2: ret=%d,nme=%s,t=%px, p=%px, cur_num=%u\n", ret, name, t, t->private, t->private->number);
 	if (!oldinfo)
 		goto put_module;
 
@@ -1448,6 +1454,7 @@ translate_compat_table(struct net *net,
 	entry0 = *pentry0;
 	size = compatr->size;
 	info->number = compatr->num_entries;
+	printk("cdx: translate_compat_table\n");
 
 	j = 0;
 	xt_compat_lock(AF_INET);
@@ -1691,12 +1698,15 @@ compat_do_ipt_get_ctl(struct sock *sk, int cmd, void __user *user, int *len)
 
 	switch (cmd) {
 	case IPT_SO_GET_INFO:
+		printk("cdx: compat_do_ipt_get_ctl: IPT_SO_GET_INFO\n");
 		ret = get_info(sock_net(sk), user, len, 1);
 		break;
 	case IPT_SO_GET_ENTRIES:
+		printk("cdx: compat_do_ipt_get_ctl: IPT_SO_GET_ENTRIES\n");
 		ret = compat_get_entries(sock_net(sk), user, len);
 		break;
 	default:
+		printk("cdx: compat_do_ipt_get_ctl: default: cmd=%d\n", cmd);
 		ret = do_ipt_get_ctl(sk, cmd, user, len);
 	}
 	return ret;
@@ -1713,14 +1723,16 @@ do_ipt_set_ctl(struct sock *sk, int cmd, void __user *user, unsigned int len)
 
 	switch (cmd) {
 	case IPT_SO_SET_REPLACE:
-		trace_printk("cdx1: user=%px, len=%u\n", user, len);
+		trace_printk("cdx1: replace: user=%px, len=%u\n", user, len);
 		ret = do_replace(sock_net(sk), user, len);
-		trace_printk("cdx2: user=%px, len=%u, ret=%d\n", user, len, ret);
+		trace_printk("cdx2: replace: eser=%px, len=%u, ret=%d\n", user, len, ret);
 		WARN_ON(ret == -EAGAIN);
 		break;
 
 	case IPT_SO_SET_ADD_COUNTERS:
+		trace_printk("cdx1: add_cnt: user=%px, len=%u\n", user, len);
 		ret = do_add_counters(sock_net(sk), user, len, 0);
+		trace_printk("cdx2: add_cnt: user=%px, len=%u, ret=%d\n", user, len, ret);
 		break;
 
 	default:
@@ -1740,11 +1752,15 @@ do_ipt_get_ctl(struct sock *sk, int cmd, void __user *user, int *len)
 
 	switch (cmd) {
 	case IPT_SO_GET_INFO:
+		trace_printk("cdx1: get_info: user=%px, len=%u\n", user, *len);
 		ret = get_info(sock_net(sk), user, len, 0);
+		trace_printk("cdx2: get_info: user=%px, len=%u\n", user, *len);
 		break;
 
 	case IPT_SO_GET_ENTRIES:
+		trace_printk("cdx1: get_entries: user=%px, len=%u\n", user, *len);
 		ret = get_entries(sock_net(sk), user, len);
+		trace_printk("cdx1: get_entries: user=%px, len=%u\n", user, *len);
 		break;
 
 	case IPT_SO_GET_REVISION_MATCH:

@@ -617,6 +617,7 @@ int xt_compat_init_offsets(u8 af, unsigned int number)
 	if (!xt[af].compat_tab)
 		return -ENOMEM;
 
+	printk("cdx: xt_compat_init_offsets\n");
 	xt[af].number = number;
 	xt[af].cur = 0;
 
@@ -1235,8 +1236,8 @@ xt_replace_table(struct xt_table *table,
 
 	printk("cdx: tbl=%s, num_counters, table->private->number (%u/%u)\n", table->name,
 		 num_counters, private->number);
-	trace_printk("cdx: tbl=%s, num_counters, table->private->number (%u/%u)\n", table->name,
-		 num_counters, private->number);
+	trace_printk("cdx: tbl=%s, num_counters, table->private->number (%u/%u), t=%px, curr_p=%px\n", table->name,
+		 num_counters, private->number, table, private);
 
 	/* Check inside lock: is the old number correct? */
 	if (num_counters != private->number) {
@@ -1276,14 +1277,8 @@ xt_replace_table(struct xt_table *table,
 		}
 	}
 
-#ifdef CONFIG_AUDIT
-	if (audit_enabled) {
-		audit_log(current->audit_context, GFP_KERNEL,
-			  AUDIT_NETFILTER_CFG,
-			  "table=%s family=%u entries=%u",
-			  table->name, table->af, private->number);
-	}
-#endif
+	trace_printk("cdx: table=%s family=%u old_p=%px, old_entries=%u, t=%px, new_p=%px, new_entreis=%u\n",
+		  table->name, table->af, private, private->number, table, newinfo, newinfo->number);
 
 	return private;
 }
@@ -1321,7 +1316,7 @@ struct xt_table *xt_register_table(struct net *net,
 		goto unlock;
 
 	private = table->private;
-	pr_debug("table->private->number = %u\n", private->number);
+	trace_printk("cdx: tbl=%px, name=%s, table->private->number = %u\n", table, table->name, private->number);
 
 	/* save number of initial entries */
 	private->initial_entries = private->number;
